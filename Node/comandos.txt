@@ -1,0 +1,5 @@
+iniciar servidor 
+node --watch app.js
+
+otro comando para iniciar el servidor, configurado package.json
+npm run dev

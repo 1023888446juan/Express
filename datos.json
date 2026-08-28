@@ -1,0 +1,16 @@
+[
+    {
+        "dni": "987456321",
+        "nombre": "Juan",
+        "apellido": "Castaneda",
+        "correo": "juan.castaneda@example.com",
+        "imagen": "foto1.jpg"
+    },
+    {
+        "dni": "87654321",
+        "nombre": "María",
+        "apellido": "Gómez",
+        "correo": "maria.gomez@example.com",
+        "imagen": "foto2.jpg"
+    }
+]

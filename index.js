@@ -10,6 +10,7 @@ const port = process.env.PUERTO || 3030;
 
 //uso de middleware body-parse
 app.use(express.json())
+app.use(express.urlencoded({extended: true}))
 
 app.get("/", (req, res) => {
   res.send(`Aprendiendo express, ficha 3407181, ADSO en el curso de desarrollo web el 31 de julio de 2026`);
@@ -92,6 +93,12 @@ app.post("/login/:perfil", (req, res)=>{
       mensaje: "Ruta no encontrada"
     });
   });
+
+  app.post("/formulario", (req, res) => {
+    const datosFormulario = req.body
+    const miNombre = req.body.nombre
+    res.status(200).json({Mensaje: "datos recibidos", nombre: miNombre})
+  })
 
 app.listen(port, function() {
   console.log(`SERVIDOR: http://localhost:${port}`);

@@ -9,6 +9,8 @@ const sistemaArchivo = require("fs");
 const ruta = require("path");
 const rutaArchivoJson = ruta.join(__dirname, "datos.json");
 const multer = require("multer");
+const resgistroMiddleware = require("./middleware/registroMiddleware");
+app.use(resgistroMiddleware);
 
 // Importar validaciones
 const {
@@ -37,10 +39,16 @@ const subirArchivo = multer({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.use ((req, res, next) => {
+  console.log (`tiempo milisegundos: ${Date.now()}`)
+  console.log (`fecha: ${new Date().toISOString()}`)
+  next()
+}); 
+
 // Endpoint raíz
 app.get("/", function(req, res) {
     res.send("Hola aprendiendo Express");
-});
+})
 
 // Obtener aprendices
 app.get("/api/aprendices", (req, res) => {
@@ -124,4 +132,12 @@ app.post("/api/aprendices", subirArchivo.single("imagen"), (req, res) => {
 // Servidor
 app.listen(port, function() {
     console.log(`Servidor http://localhost:${port}`);
+});
+
+app.put("/api/aprendices/:id", (req, res) => {
+  res.status(200).json({mensaje: "Endpoint para actualizar aprendiz"});
+});
+
+app.delete("/api/aprendices/:id", (req, res) => {
+  res.status(200).json({mensaje: "Endpoint para eliminar aprendiz"});
 });

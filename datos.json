@@ -22,5 +22,17 @@
     "name": "Juan ",
     "perfil": "aprendiz",
     "email": "castaneda@gmail.com"
+  },
+  {
+    "nombre": "Juan",
+    "edad": "19",
+    "correo": "castaneda@gmail.com",
+    "imagen": "/misImagenes/1789141754400.avif"
+  },
+  {
+    "nombre": "Juan",
+    "edad": "19",
+    "correo": "castaneda@gmail.com",
+    "imagen": "/misImagenes/1789142017674.png"
   }
 ]

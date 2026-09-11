@@ -12,7 +12,7 @@ const sistemaArchivo = require("fs");
 const ruta = require("path");
 const rutaArchivoJson = ruta.join(__dirname, "datos.json");
 
-const cors = require("multer")
+const cors = require("multer");
 
 // Endpoint raíz
 app.get("/", function(req, res) {

@@ -9,8 +9,13 @@ const sistemaArchivo = require("fs");
 const ruta = require("path");
 const rutaArchivoJson = ruta.join(__dirname, "datos.json");
 const multer = require("multer");
+const jwt = require("jsonwebtoken");
 const resgistroMiddleware = require("./middleware/registroMiddleware");
 app.use(resgistroMiddleware);
+const manegadorErrores = require("./middleware/manegadorErrores");
+app.use(manegadorErrores);
+const autenticarMiddleware = require("./middleware/autenticarMiddleware");
+
 
 // Importar validaciones
 const {
@@ -129,10 +134,7 @@ app.post("/api/aprendices", subirArchivo.single("imagen"), (req, res) => {
     });
 });
 
-// Servidor
-app.listen(port, function() {
-    console.log(`Servidor http://localhost:${port}`);
-});
+
 
 app.put("/api/aprendices/:id", (req, res) => {
   res.status(200).json({mensaje: "Endpoint para actualizar aprendiz"});
@@ -140,4 +142,36 @@ app.put("/api/aprendices/:id", (req, res) => {
 
 app.delete("/api/aprendices/:id", (req, res) => {
   res.status(200).json({mensaje: "Endpoint para eliminar aprendiz"});
+});
+
+app.get("/error", (req, res, next) => {
+    next(new Error("Error de prueba"))
+
+});
+
+app.get("/rutaprotegida", autenticarMiddleware, (req, res, next) => {
+    res.json({mensaje: "Esta ruta esta protegida."});
+});
+
+app.use(manegadorErrores);
+
+app.get ("/rutaprotegida", autenticarMiddleware, (req, res) => {
+    res.json({mensaje: "Esta ruta esta protegida."});
+});
+
+//endpoint iniciar sesion generar token
+app.post("/login", (req, res) => {
+    const {usuario, clave} = req.body;
+    const usuarioValido = {"user": "Juan", "clave":"juan1234"}
+
+    if (usuario !== usuarioValido.user || clave !== usuarioValido.clave) {
+        res.json({mensaje: "Usuario o contraseña incorrectos"})
+    }
+    const token = jwt.sign({user: usuario}, process.env.JWT_SECRETO, {expiresIn: "2h"})
+    res.json({token: "token generado", token})
+})
+
+// Servidor
+app.listen(port, function() {
+    console.log(`Servidor http://localhost:${port}`);
 });
